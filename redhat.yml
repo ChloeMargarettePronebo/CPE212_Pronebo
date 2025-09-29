@@ -1,0 +1,23 @@
+---
+  - name: Install Apache on Red Hat
+    host: redhat
+    become: yes
+    task:
+
+      - name: Ensure httpd is installed
+        yum:
+          name: httpd
+          state: present
+
+      - name: Start and enable httpd
+        service:
+          name: httpd
+          state: started
+          enable: yes
+
+      - name: Open firewall for HTTP
+        firewalld:
+          port: 80/tcp
+          permanent: yes
+          state: enabled
+          immediate: yes
